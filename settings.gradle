@@ -1,2 +1,0 @@
-include ':lib', ':app'
-rootProject.name="VirtualApp"
