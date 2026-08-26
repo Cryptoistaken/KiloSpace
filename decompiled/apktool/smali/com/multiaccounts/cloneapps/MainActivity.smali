@@ -2072,7 +2072,9 @@
 
     move-result-object v0
 
-    invoke-interface {v0, v3}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
+    const/4 v4, 0x0
+
+    invoke-interface {v0, v4}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
 
     const v0, 0x7f08003c
 
