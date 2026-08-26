@@ -1,0 +1,113 @@
+name: Build KiloSpace from Decompiled
+
+on:
+  push:
+    branches: [ "main", "master" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+    inputs:
+      decompile:
+        description: 'Decompile XAPK to decompiled/ (first run)'
+        required: false
+        default: 'false'
+        type: choice
+        options: [ 'true', 'false' ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Install apktool & jadx
+        run: |
+          wget -q https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool -O /usr/local/bin/apktool
+          chmod +x /usr/local/bin/apktool
+          wget -q https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.9.3.jar -O /usr/local/bin/apktool.jar
+          wget -q https://github.com/skylot/jadx/releases/download/v1.5.2/jadx-1.5.2.zip -O /tmp/jadx.zip
+          unzip -q /tmp/jadx.zip -d /opt/jadx
+          /opt/jadx/bin/jadx --version
+          apktool --version
+
+      - name: Decompile XAPK to decompiled/ (if needed)
+        run: |
+          if [ "${{ inputs.decompile }}" = "true" ] || [ ! -d "decompiled" ]; then
+            echo "Decompiling apks/MultiCloner_1.2.5.10.xapk -> decompiled/"
+            rm -rf /tmp/xapk && mkdir -p /tmp/xapk
+            unzip -q apks/MultiCloner_1.2.5.10.xapk -d /tmp/xapk
+            echo "XAPK contents:"; ls -lh /tmp/xapk
+            BASE_APK=$(find /tmp/xapk -name "com.multiaccounts.cloneapps.apk" | head -1)
+            echo "Base APK: $BASE_APK"
+            rm -rf decompiled
+            mkdir -p decompiled
+            echo "apktool d..."
+            apktool d "$BASE_APK" -o decompiled/apktool -f 2>&1 | tail -20
+            echo "jadx d..."
+            /opt/jadx/bin/jadx -d decompiled/jadx "$BASE_APK" 2>&1 | tail -20
+            echo "Copy vir.apk engine"
+            unzip -p "$BASE_APK" assets/vir.apk > decompiled/vir.apk 2>&1 && ls -lh decompiled/vir.apk || echo "no vir"
+            echo "Decompiled done - commit if new"
+            ls -lh decompiled/ | head -20
+          else
+            echo "decompiled/ exists, skipping decompile"
+            ls -lh decompiled/ | head -20
+          fi
+
+      - name: Build modified APK from decompiled/apktool
+        run: |
+          if [ -d "decompiled/apktool" ]; then
+            echo "Rebuilding from decompiled/apktool (UI mods here)..."
+            # Modify UI here if needed before build - example: block ads by removing AdView
+            # You can edit decompiled/apktool/res/layout/*.xml, AndroidManifest.xml before this step
+            apktool b decompiled/apktool -o /tmp/rebuilt.apk 2>&1 | tail -30
+            echo "Signing with debug key..."
+            keytool -genkey -v -keystore /tmp/debug.jks -storepass android -alias androiddebugkey -keypass android -dname "CN=Debug" -keyalg RSA -validity 10000 2>&1 | tail -5 || echo "key exists"
+            $ANDROID_HOME/build-tools/*/apksigner sign --ks /tmp/debug.jks --ks-pass pass:android --key-pass pass:android --out app-release.apk /tmp/rebuilt.apk 2>&1 | tail -10 || echo "sign via jarsigner"
+            # fallback to jarsigner if apksigner not found
+            if [ ! -f app-release.apk ]; then
+              jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA256 -keystore /tmp/debug.jks -storepass android /tmp/rebuilt.apk androiddebugkey 2>&1 | tail -10
+              cp /tmp/rebuilt.apk app-release.apk
+            fi
+            ls -lh app-release.apk
+            mkdir -p app/build/outputs/apk/release
+            cp app-release.apk app/build/outputs/apk/release/KiloSpace-modified-v1.2.5.10.apk
+          else
+            echo "No decompiled/apktool found - run workflow with decompile=true first"
+            exit 1
+          fi
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: app/build/outputs/apk/release/*.apk
+
+      - name: Commit decompiled if new
+        if: inputs.decompile == 'true'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add decompiled/ 2>&1 | head -20 || true
+          git diff --cached --stat | head -30
+          if [ -n "$(git diff --cached --name-only)" ]; then
+            git commit -m "KiloSpace: store decompiled MultiCloner 1.2.5.10 (apktool + jadx) for UI modify" 2>&1 | head -10
+            git push origin HEAD:main 2>&1 | head -10
+          else
+            echo "No decompiled changes"
+          fi
