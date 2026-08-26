@@ -34,16 +34,16 @@ $jar="B:\Studio\Tools\KiloSpace\tools\apktool_2.9.3.jar"; $bt="C:\Users\Ratul\an
 Remove-Item decompiled/apktool/build -Recurse -Force -ErrorAction SilentlyContinue
 java -jar $jar b decompiled/apktool -o $env:TEMP\rebuilt.apk
 & "$bt\zipalign.exe" -f 4 $env:TEMP\rebuilt.apk $env:TEMP\zip.apk
-& "$bt\apksigner.bat" sign --ks $env:TEMP\debug.jks --ks-pass pass:android --key-pass pass:android --out dist/final.apk $env:TEMP\zip.apk
-adb -s localhost:5557 install -r dist/final.apk
+& "$bt\apksigner.bat" sign --ks $env:TEMP\debug.jks --ks-pass pass:android --key-pass pass:android --out apks/final.apk $env:TEMP\zip.apk
+adb -s localhost:5557 install -r apks/final.apk
 adb -s localhost:5557 shell am force-stop com.multiaccounts.cloneapps; adb -s localhost:5557 shell am start -n com.multiaccounts.cloneapps/.SplashActivity
 adb -s localhost:5557 shell uiautomator dump /sdcard/window_dump.xml; adb -s localhost:5557 shell cat /sdcard/window_dump.xml | Select-String "More options|iv_space_more"
 adb -s localhost:5557 logcat -d *:E | Select-String "FATAL|AndroidRuntime"
 ```
-Built APK goes to `dist/final.apk` (not root); intermediates in `$env:TEMP` (e.g. `rebuilt.apk`). Keep root clean - tools in `tools/` (`apktool_2.9.3.jar`), sources in `apks/` (`MultiCloner_1.2.5.10.xapk` + `xapk_out/`), final artifact is `dist/`.
+Built APK goes to `apks/final.apk` (merged `dist`+`apks`); intermediates in `$env:TEMP` (e.g. `rebuilt.apk`). Keep root clean - tools in `tools/` (`apktool_2.9.3.jar`), sources + final in `apks/` (`MultiCloner_1.2.5.10.xapk` + `xapk_out/` + `final.apk`).
 
 ## Commit
-`git add -A && git commit -m "ui: ..."` include `decompiled/apktool/res/layout` `smali` `dist/final.apk` `apktool.*.jar` if needed. `git push` when ready.
+`git add -A && git commit -m "ui: ..."` include `decompiled/apktool/res/layout` `smali` `apks/final.apk` `tools/apktool.*.jar` if needed. `git push` when ready.
 
 ## Pitfalls
 - Deleting menu item without smali null-check => `MainActivity:98` `NullPointer`.
