@@ -76,13 +76,15 @@ jobs:
         run: |
           if [ -d "decompiled/apktool" ]; then
             echo "Rebuilding from decompiled/apktool (UI mods here)..."
-            # Modify UI here if needed before build - example: block ads by removing AdView
-            # You can edit decompiled/apktool/res/layout/*.xml, AndroidManifest.xml before this step
+            # Fix Android 16 attribute not supported by apktool 2.9.3
+            sed -i '/pageSizeCompat/d' decompiled/apktool/AndroidManifest.xml || true
+            echo "Fixed manifest pageSizeCompat"
             apktool b decompiled/apktool -o /tmp/rebuilt.apk 2>&1 | tail -30
             echo "Signing with debug key..."
             keytool -genkey -v -keystore /tmp/debug.jks -storepass android -alias androiddebugkey -keypass android -dname "CN=Debug" -keyalg RSA -validity 10000 2>&1 | tail -5 || echo "key exists"
-            $ANDROID_HOME/build-tools/*/apksigner sign --ks /tmp/debug.jks --ks-pass pass:android --key-pass pass:android --out app-release.apk /tmp/rebuilt.apk 2>&1 | tail -10 || echo "sign via jarsigner"
-            # fallback to jarsigner if apksigner not found
+            APKSigner=$(find $ANDROID_HOME/build-tools -name apksigner -type f | head -1)
+            echo "Using apksigner $APKSigner"
+            $APKSigner sign --ks /tmp/debug.jks --ks-pass pass:android --key-pass pass:android --out app-release.apk /tmp/rebuilt.apk 2>&1 | tail -10 || echo "sign via jarsigner"
             if [ ! -f app-release.apk ]; then
               jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA256 -keystore /tmp/debug.jks -storepass android /tmp/rebuilt.apk androiddebugkey 2>&1 | tail -10
               cp /tmp/rebuilt.apk app-release.apk
