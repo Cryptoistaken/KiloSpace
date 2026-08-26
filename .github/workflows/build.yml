@@ -38,13 +38,14 @@ jobs:
 
       - name: Install apktool & jadx
         run: |
+          # Use committed tools/apktool_2.9.3.jar to match local (AGENTS.md); fallback wget 2.9.3 specifically
+          if [ -f "tools/apktool_2.9.3.jar" ]; then echo "using tools/apktool_2.9.3.jar"; cp tools/apktool_2.9.3.jar /usr/local/bin/apktool.jar; else wget -q https://github.com/iBotPeaches/Apktool/releases/download/v2.9.3/apktool_2.9.3.jar -O /usr/local/bin/apktool.jar; fi
           wget -q https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool -O /usr/local/bin/apktool
           chmod +x /usr/local/bin/apktool
-          wget -q https://github.com/iBotPeaches/Apktool/releases/download/v2.9.3/apktool_2.9.3.jar -O /usr/local/bin/apktool.jar
           wget -q https://github.com/skylot/jadx/releases/download/v1.5.2/jadx-1.5.2.zip -O /tmp/jadx.zip
           unzip -q /tmp/jadx.zip -d /opt/jadx
           /opt/jadx/bin/jadx --version
-          apktool --version
+          java -jar /usr/local/bin/apktool.jar --version || apktool --version
 
       - name: Decompile XAPK to decompiled/ (if needed)
         env:
@@ -76,23 +77,31 @@ jobs:
         run: |
           if [ -d "decompiled/apktool" ]; then
             echo "Rebuilding from decompiled/apktool (UI mods here)..."
-            # Fix Android 16 attribute not supported by apktool 2.9.3 - remove attribute not whole line
+            rm -rf decompiled/apktool/build
             sed -i 's/ android:pageSizeCompat="[^"]*"//g' decompiled/apktool/AndroidManifest.xml || true
             sed -i 's/ android:enableOnBackInvokedCallback="[^"]*"//g' decompiled/apktool/AndroidManifest.xml || true
             echo "Fixed manifest pageSizeCompat"
-            apktool b decompiled/apktool -o /tmp/rebuilt.apk 2>&1 | tail -30
+            if [ -f "tools/apktool_2.9.3.jar" ]; then JAR="tools/apktool_2.9.3.jar"; else JAR="/usr/local/bin/apktool.jar"; fi
+            echo "Building with $JAR (local: java -jar tools/apktool_2.9.3.jar b decompiled/apktool)"
+            java -jar "$JAR" b decompiled/apktool -o /tmp/rebuilt.apk 2>&1 | tail -30
             echo "Signing with debug key..."
             keytool -genkey -v -keystore /tmp/debug.jks -storepass android -alias androiddebugkey -keypass android -dname "CN=Debug" -keyalg RSA -validity 10000 2>&1 | tail -5 || echo "key exists"
+            ZIPALIGN=$(find $ANDROID_HOME/build-tools -name zipalign -type f | head -1)
+            echo "zipalign $ZIPALIGN -f 4 /tmp/rebuilt.apk /tmp/zip.apk"
+            "$ZIPALIGN" -f 4 /tmp/rebuilt.apk /tmp/zip.apk 2>&1 | tail -10
             APKSigner=$(find $ANDROID_HOME/build-tools -name apksigner -type f | head -1)
-            echo "Using apksigner $APKSigner"
-            $APKSigner sign --ks /tmp/debug.jks --ks-pass pass:android --key-pass pass:android --out app-release.apk /tmp/rebuilt.apk 2>&1 | tail -10 || echo "sign via jarsigner"
-            if [ ! -f app-release.apk ]; then
-              jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA256 -keystore /tmp/debug.jks -storepass android /tmp/rebuilt.apk androiddebugkey 2>&1 | tail -10
-              cp /tmp/rebuilt.apk app-release.apk
+            echo "apksigner $APKSigner sign --ks /tmp/debug.jks --out apks/final.apk /tmp/zip.apk"
+            mkdir -p apks
+            "$APKSigner" sign --ks /tmp/debug.jks --ks-pass pass:android --key-pass pass:android --out apks/final.apk /tmp/zip.apk 2>&1 | tail -10 || echo "sign via jarsigner"
+            if [ ! -f apks/final.apk ]; then
+              jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA256 -keystore /tmp/debug.jks -storepass android /tmp/zip.apk androiddebugkey 2>&1 | tail -10
+              cp /tmp/zip.apk apks/final.apk
             fi
-            ls -lh app-release.apk
+            ls -lh apks/final.apk /tmp/rebuilt.apk /tmp/zip.apk
+            cp apks/final.apk KiloSpace-v1.2.5.10-universal.apk
             mkdir -p app/build/outputs/apk/release
-            cp app-release.apk app/build/outputs/apk/release/KiloSpace-modified-v1.2.5.10.apk
+            cp apks/final.apk app/build/outputs/apk/release/KiloSpace-v1.2.5.10-universal.apk
+            ls -lh KiloSpace-*.apk app/build/outputs/apk/release/
           else
             echo "No decompiled/apktool found - run workflow with decompile=true first"
             exit 1
@@ -102,7 +111,17 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: app-release
-          path: app/build/outputs/apk/release/*.apk
+          path: |
+            apks/final.apk
+            KiloSpace-v1.2.5.10-universal.apk
+            app/build/outputs/apk/release/*.apk
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@46312ac3ccfbc86e87f4d355f6de74d53ac23d129 # v2.3.4
+        with:
+          files: KiloSpace-v1.2.5.10-universal.apk
+          generate_release_notes: true
 
       - name: Commit decompiled if new
         if: inputs.decompile == 'true'

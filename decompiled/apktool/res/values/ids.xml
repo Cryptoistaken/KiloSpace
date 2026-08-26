@@ -453,5 +453,16 @@
     <item type="id" name="view_tree_saved_state_registry_owner" />
     <item type="id" name="view_tree_view_model_store_owner" />
     <item type="id" name="visible_removing_fragment_view_tag" />
+    <item type="id" name="view_mode_bar" />
+    <item type="id" name="view_mode_btn" />
+    <item type="id" name="layout_folder_icon" />
+    <item type="id" name="folder_preview_grid" />
+    <item type="id" name="iv_folder_preview_0" />
+    <item type="id" name="iv_folder_preview_1" />
+    <item type="id" name="iv_folder_preview_2" />
+    <item type="id" name="iv_folder_preview_3" />
+    <item type="id" name="tv_folder_name" />
+    <item type="id" name="tv_folder_popup_title" />
+    <item type="id" name="folder_popup_grid" />
     <item type="id" name="zero_corner_chip" />
 </resources>

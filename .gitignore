@@ -1,6 +1,13 @@
-# keep apks xapk
+# keep apks xapk splits (source) - but keep final
 apks/xapk_out/
 *.tmp
+
+# apktool build cache - regenerates on `apktool b`, do not commit
+decompiled/apktool/build/
+decompiled/jadx/
+
+# local tmp
+C:/Users/Ratul/AppData/Local/Temp/opencode/
 
 node_modules/
 package.json
