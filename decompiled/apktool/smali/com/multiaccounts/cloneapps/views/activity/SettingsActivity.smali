@@ -84,6 +84,11 @@
     .line 1
     invoke-super {p0, p1}, Lcom/multiaccounts/cloneapps/p1;->onCreate(Landroid/os/Bundle;)V
 
+    # ponytail: no-op settings, finish immediately if launched externally
+    invoke-virtual {p0}, Landroid/app/Activity;->finish()V
+
+    return-void
+
     .line 2
     .line 3
     .line 4
@@ -823,6 +828,35 @@
     .line 389
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
+    # battery optimization entry moved from home banner
+    new-instance v1, Lcom/multiaccounts/cloneapps/bh0;
+
+    const v3, 0x7f1000de
+
+    invoke-virtual {p0, v3}, Landroid/content/Context;->getString(I)Ljava/lang/String;
+
+    move-result-object v3
+
+    const v4, 0x7f0700ab
+
+    new-instance v5, Landroid/content/Intent;
+
+    const-string v6, "android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+
+    invoke-direct {v5, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
+
+    const-string v6, "package:com.multiaccounts.cloneapps"
+
+    invoke-static {v6}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
+
+    move-result-object v6
+
+    invoke-virtual {v5, v6}, Landroid/content/Intent;->setData(Landroid/net/Uri;)Landroid/content/Intent;
+
+    invoke-direct {v1, v4, v5, v3}, Lcom/multiaccounts/cloneapps/bh0;-><init>(ILandroid/content/Intent;Ljava/lang/String;)V
+
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
     .line 390
     .line 391
     .line 392
@@ -1111,7 +1145,8 @@
     .line 541
     .line 542
     .line 543
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: removed About
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
     .line 544
     .line 545

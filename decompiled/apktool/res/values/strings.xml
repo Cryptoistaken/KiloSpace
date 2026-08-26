@@ -227,7 +227,7 @@ We will share more once you're back online."</string>
     <string name="path_password_eye_mask_strike_through">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_eye_mask_visible">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through">M3.27,4.27 L19.74,20.74</string>
-    <string name="permission_battery">Ignore battery optimization to receive app notifications in the background</string>
+    <string name="permission_battery">Battery Optimization</string>
     <string name="permission_get_apps">Enable access installed apps list permission</string>
     <string name="permission_notification">Enable notification permission to receive app notifications</string>
     <string name="popup_window_add">Add App</string>

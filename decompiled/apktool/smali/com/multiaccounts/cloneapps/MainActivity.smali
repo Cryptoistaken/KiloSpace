@@ -1632,30 +1632,7 @@
     .line 25
     if-ne v0, v1, :cond_1
 
-    .line 26
-    .line 27
-    sget-object v0, Lcom/multiaccounts/cloneapps/du;->OooO00o:Ljava/lang/String;
-
-    .line 28
-    .line 29
-    new-instance v0, Landroid/content/Intent;
-
-    .line 30
-    .line 31
-    const-class v1, Lcom/multiaccounts/cloneapps/views/activity/SettingsActivity;
-
-    .line 32
-    .line 33
-    invoke-direct {v0, p0, v1}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
-
-    .line 34
-    .line 35
-    .line 36
-    invoke-virtual {p0, v0}, Landroid/content/Context;->startActivity(Landroid/content/Intent;)V
-
-    .line 37
-    .line 38
-    .line 39
+    # ponytail: settings removed -> no-op, avoid launch SettingsActivity
     goto/16 :goto_3
 
     .line 40
@@ -2098,7 +2075,10 @@
 
     move-result-object v0
 
-    invoke-interface {v0, v3}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
+    # ponytail: hide settings toolbar button, keep node to avoid NPE (0x7f080049)
+    const/4 v4, 0x0
+
+    invoke-interface {v0, v4}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
 
     invoke-super {p0, p1}, Landroid/app/Activity;->onPrepareOptionsMenu(Landroid/view/Menu;)Z
 

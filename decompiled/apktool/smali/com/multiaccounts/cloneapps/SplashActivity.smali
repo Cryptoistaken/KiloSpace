@@ -361,6 +361,9 @@
     .line 164
     move-result p1
 
+    # ponytail: auto-agree privacy - skip initial page without deleting class
+    const/4 p1, 0x1
+
     .line 165
     if-eqz p1, :cond_2
 
