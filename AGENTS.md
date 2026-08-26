@@ -30,7 +30,7 @@ Target: `com.multiaccounts.cloneapps` (MultiCloner 1.2.5.10) decompiled at `deco
 
 ## Rebuild / Install / Verify (host fallback, JAVA_HOME=C:\Users\Ratul\.jdks\jbr-17.0.14)
 ```pwsh
-$jar="B:\Studio\Tools\KiloSpace\apktool_2.9.3.jar"; $bt="C:\Users\Ratul\android-sdk\build-tools\36.0.0"
+$jar="B:\Studio\Tools\KiloSpace\tools\apktool_2.9.3.jar"; $bt="C:\Users\Ratul\android-sdk\build-tools\36.0.0"
 Remove-Item decompiled/apktool/build -Recurse -Force -ErrorAction SilentlyContinue
 java -jar $jar b decompiled/apktool -o $env:TEMP\rebuilt.apk
 & "$bt\zipalign.exe" -f 4 $env:TEMP\rebuilt.apk $env:TEMP\zip.apk
@@ -40,7 +40,7 @@ adb -s localhost:5557 shell am force-stop com.multiaccounts.cloneapps; adb -s lo
 adb -s localhost:5557 shell uiautomator dump /sdcard/window_dump.xml; adb -s localhost:5557 shell cat /sdcard/window_dump.xml | Select-String "More options|iv_space_more"
 adb -s localhost:5557 logcat -d *:E | Select-String "FATAL|AndroidRuntime"
 ```
-Built APK goes to `dist/final.apk` (not root); intermediates in `$env:TEMP` (e.g. `rebuilt.apk`). Keep root clean - `apktool_*.jar` stays at root as tool, final artifact is `dist/`.
+Built APK goes to `dist/final.apk` (not root); intermediates in `$env:TEMP` (e.g. `rebuilt.apk`). Keep root clean - tools in `tools/` (`apktool_2.9.3.jar`), sources in `apks/` (`MultiCloner_1.2.5.10.xapk` + `xapk_out/`), final artifact is `dist/`.
 
 ## Commit
 `git add -A && git commit -m "ui: ..."` include `decompiled/apktool/res/layout` `smali` `dist/final.apk` `apktool.*.jar` if needed. `git push` when ready.
