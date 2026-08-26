@@ -20,7 +20,7 @@
     .line 1
     invoke-direct {p0}, Lcom/multiaccounts/cloneapps/dg;-><init>()V
 
-    const/4 v0, 0x0
+    const/16 v0, 0x14
 
     iput v0, p0, Lcom/multiaccounts/cloneapps/ha0;->oo000o:I
 
