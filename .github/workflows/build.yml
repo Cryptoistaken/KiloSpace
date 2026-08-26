@@ -41,7 +41,6 @@ jobs:
           wget -q https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool -O /usr/local/bin/apktool
           chmod +x /usr/local/bin/apktool
           wget -q https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.9.3.jar -O /usr/local/bin/apktool.jar
-          echo "a33c4c1d2d5f0f1e1c1a1b1c1d1e1f1a1b1c1d1e  /usr/local/bin/apktool.jar" | sha256sum -c - || echo "apktool jar checksum skipped - pin to commit if needed"
           wget -q https://github.com/skylot/jadx/releases/download/v1.5.2/jadx-1.5.2.zip -O /tmp/jadx.zip
           unzip -q /tmp/jadx.zip -d /opt/jadx
           /opt/jadx/bin/jadx --version
