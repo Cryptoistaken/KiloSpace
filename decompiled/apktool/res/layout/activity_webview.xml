@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <androidx.appcompat.widget.Toolbar android:id="@id/toolbar" android:layout_width="fill_parent" android:layout_height="?actionBarSize" app:popupTheme="@style/Theme.Demo.PopupOverlay" />
+        <WebView android:id="@id/layout_webview" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </LinearLayout>
+    <com.multiaccounts.cloneapps.views.widget.IndicatorView android:layout_gravity="center" android:id="@id/activity_indicator" android:layout_width="25.0dip" android:layout_height="25.0dip" android:layout_centerInParent="true" app:aiv_color="?colorPrimary" app:aiv_strokeWidth="2.5dip" />
+</RelativeLayout>

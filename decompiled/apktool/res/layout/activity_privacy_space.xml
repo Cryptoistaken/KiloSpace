@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@id/privacy_space_root" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar android:id="@id/toolbar" android:layout_width="fill_parent" android:layout_height="?actionBarSize" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout android:id="@id/ad_view_container" android:layout_width="fill_parent" android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/toolbar" />
+    <RelativeLayout android:id="@id/layout_grid" android:layout_width="0.0dip" android:layout_height="0.0dip" android:layout_marginTop="10.0dip" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/ad_view_container">
+        <com.multiaccounts.cloneapps.views.view.MSView android:id="@id/main_scroller" android:scrollbars="none" android:layout_width="fill_parent" android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent">
+            <com.multiaccounts.cloneapps.views.view.DGView android:gravity="center" android:id="@id/privacy_apps_gridview" android:paddingTop="10.0dip" android:paddingBottom="@dimen/grid_view_padding_top" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:listSelector="@drawable/grid_view_item_selector" android:horizontalSpacing="@dimen/grid_view_horizontal_spacing" android:verticalSpacing="@dimen/grid_view_vertical_spacing" android:numColumns="@integer/grid_view_installed_columns" android:layout_marginStart="@dimen/grid_view_padding_margin" android:layout_marginEnd="@dimen/grid_view_padding_margin" />
+        </com.multiaccounts.cloneapps.views.view.MSView>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

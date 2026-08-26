@@ -1,0 +1,17 @@
+.class public interface abstract Lcom/google/android/gms/internal/ads/zzbqt;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Landroid/os/IInterface;
+
+
+# virtual methods
+.method public abstract zze()V
+.end method
+
+.method public abstract zzf(Ljava/lang/String;)V
+.end method
+
+.method public abstract zzg(Lcom/multiaccounts/cloneapps/ch1;)V
+.end method

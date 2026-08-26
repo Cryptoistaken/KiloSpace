@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:icon="@drawable/ic_popup_show_app" android:id="@id/action_show_hide_apps" android:orderInCategory="100" android:title="@string/action_show_hide_apps" app:showAsAction="always" />
+    <item android:icon="@drawable/ic_edit_space" android:id="@id/action_edit_space" android:visible="false" android:orderInCategory="100" android:title="Edit" app:showAsAction="always" />
+    <item android:icon="@drawable/ic_search_app" android:id="@id/action_search" android:orderInCategory="100" android:title="Search" app:showAsAction="always" />
+    <item android:icon="@drawable/ic_clear_process" android:id="@id/action_clear_process" android:orderInCategory="100" android:title="Clear" app:showAsAction="always" />
+    <item android:icon="@drawable/ic_settings" android:id="@id/action_settings" android:orderInCategory="100" android:title="@string/action_settings" app:showAsAction="always" />
+    <item android:icon="@drawable/ic_search_app" android:id="@id/action_qrcode" android:visible="false" android:orderInCategory="100" android:title="QrCode" app:showAsAction="never" /></menu>
+
+
+

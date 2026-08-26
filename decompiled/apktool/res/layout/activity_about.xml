@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <androidx.appcompat.widget.Toolbar android:id="@id/toolbar" android:layout_width="fill_parent" android:layout_height="?actionBarSize" app:popupTheme="@style/Theme.Demo.PopupOverlay" />
+        <FrameLayout android:id="@id/ad_view_container" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="@dimen/about_image_height">
+            <ImageView android:id="@id/iv_about_top_image" android:layout_width="128.0dip" android:layout_height="128.0dip" android:src="@mipmap/ic_launcher" android:adjustViewBounds="true" />
+            <TextView android:textSize="20.0sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dip" android:text="@string/app_name" />
+        </LinearLayout>
+        <ListView android:id="@id/lv_about_information" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginLeft="12.0dip" android:layout_marginTop="24.0dip" android:layout_marginRight="12.0dip" android:layout_marginBottom="100.0dip" android:divider="@android:color/transparent" android:dividerHeight="12.0dip" android:layout_weight="1.0" android:layout_marginHorizontal="12.0dip" />
+        <View android:background="@drawable/divider_line" android:layout_width="fill_parent" android:layout_height="@dimen/app_info_divider_line_size" android:layout_below="@id/app_info_list_view" />
+        <TextView android:textSize="14.0sp" android:gravity="center" android:id="@id/tv_about_bottom_title" android:layout_width="fill_parent" android:layout_height="30.0dip" android:text="@string/about_bottom_title" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,84 @@
+.class public final Lcom/multiaccounts/cloneapps/a0;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Lcom/multiaccounts/cloneapps/q50;
+
+
+# static fields
+.field public static final OooO00o:Lcom/multiaccounts/cloneapps/a0;
+
+.field public static final OooO0O0:Lcom/multiaccounts/cloneapps/ll;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .line 1
+    new-instance v0, Lcom/multiaccounts/cloneapps/a0;
+
+    .line 2
+    .line 3
+    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    sput-object v0, Lcom/multiaccounts/cloneapps/a0;->OooO00o:Lcom/multiaccounts/cloneapps/a0;
+
+    .line 7
+    .line 8
+    const-string v0, "logRequest"
+
+    .line 9
+    .line 10
+    invoke-static {v0}, Lcom/multiaccounts/cloneapps/ll;->OooO0O0(Ljava/lang/String;)Lcom/multiaccounts/cloneapps/ll;
+
+    .line 11
+    .line 12
+    .line 13
+    move-result-object v0
+
+    .line 14
+    sput-object v0, Lcom/multiaccounts/cloneapps/a0;->OooO0O0:Lcom/multiaccounts/cloneapps/ll;
+
+    .line 15
+    .line 16
+    return-void
+.end method
+
+
+# virtual methods
+.method public final OooO00o(Ljava/lang/Object;Ljava/lang/Object;)V
+    .locals 1
+
+    .line 1
+    check-cast p1, Lcom/multiaccounts/cloneapps/d2;
+
+    .line 2
+    .line 3
+    check-cast p2, Lcom/multiaccounts/cloneapps/r50;
+
+    .line 4
+    .line 5
+    check-cast p1, Lcom/multiaccounts/cloneapps/k0;
+
+    .line 6
+    .line 7
+    iget-object p1, p1, Lcom/multiaccounts/cloneapps/k0;->OooO00o:Ljava/util/List;
+
+    .line 8
+    .line 9
+    sget-object v0, Lcom/multiaccounts/cloneapps/a0;->OooO0O0:Lcom/multiaccounts/cloneapps/ll;
+
+    .line 10
+    .line 11
+    invoke-interface {p2, v0, p1}, Lcom/multiaccounts/cloneapps/r50;->OooO00o(Lcom/multiaccounts/cloneapps/ll;Ljava/lang/Object;)Lcom/multiaccounts/cloneapps/r50;
+
+    .line 12
+    .line 13
+    .line 14
+    return-void
+.end method

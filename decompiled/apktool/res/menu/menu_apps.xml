@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@id/menu_apps_sort_by_name" android:orderInCategory="100" android:title="@string/menu_apps_sort_by_name" app:showAsAction="never" />
+    <item android:id="@id/menu_apps_sort_by_storage" android:orderInCategory="100" android:title="@string/menu_apps_sort_by_memory" app:showAsAction="never" />
+</menu>

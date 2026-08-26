@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="70.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="@dimen/app_info_title_size" android:gravity="center_vertical" android:layout_gravity="start|center" android:id="@id/tv_app_info_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="title" android:layout_marginStart="40.0dip" />
+    <TextView android:textSize="@dimen/app_info_memory_size" android:gravity="center_vertical" android:layout_gravity="start|center" android:id="@id/tv_app_info_content" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="content" android:layout_marginStart="40.0dip" />
+</LinearLayout>

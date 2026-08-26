@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="70.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:background="@drawable/bg_settings_item" android:layout_width="fill_parent" android:layout_height="60.0dip">
+        <ImageView android:layout_gravity="start|center" android:id="@id/iv_start" android:layout_width="24.0dip" android:layout_height="24.0dip" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:src="@drawable/ic_manage_apps" android:layout_marginHorizontal="10.0dip" />
+        <TextView android:textSize="@dimen/about_text_content_size" android:layout_gravity="start|center" android:id="@id/id_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:drawablePadding="10.0dip" android:paddingStart="40.0dip" android:layout_marginStart="@dimen/settings_text_margin" />
+        <com.multiaccounts.cloneapps.views.widget.ConfirmSwitch android:gravity="end|center" android:layout_gravity="end|center" android:id="@id/s_settings_select" android:focusable="false" android:focusableInTouchMode="false" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textOn="@string/settings_switch_on" android:textOff="@string/settings_switch_off" android:thumb="@drawable/switch_thumb" android:track="@drawable/switch_track" android:switchMinWidth="10.0dip" android:layout_marginEnd="10.0dip" android:showText="true" />
+        <RadioButton android:gravity="end|center" android:layout_gravity="end|center" android:id="@id/id_select" android:focusable="false" android:focusableInTouchMode="false" android:visibility="gone" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false" android:button="@drawable/radio_button" />
+    </FrameLayout>
+</FrameLayout>

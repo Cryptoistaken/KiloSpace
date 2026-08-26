@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:height="@dimen/switch_button_size" />
+    <corners android:radius="@dimen/switch_button_radius" />
+    <gradient android:startColor="?colorPrimary" android:endColor="?colorPrimary" android:angle="0.0" />
+</shape>
