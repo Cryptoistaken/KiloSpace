@@ -1,0 +1,51 @@
+# AGENTS.md - KiloSpace UI Layer Modification
+
+Target: `com.multiaccounts.cloneapps` (MultiCloner 1.2.5.10) decompiled at `decompiled/apktool`. All UI edits = XML + smali visibility patch + rebuild -> adb `localhost:5557`.
+
+## Structure
+- `res/layout/activity_main.xml:2` Toolbar + `fragment_home.xml` + FABs `cl_add_app:18` `cl_privacy_space:22`
+- `res/layout/fragment_home.xml:2` `cl_permission:4` banner + `main_scroller:9` -> `ll_grid_view_list:19` inflates `gridview_list_item.xml` per user space
+- `res/layout/gridview_list_item.xml:10` `iv_space_more` (30dp top-end `ic_permission_forward` arrow) toggled by `smali/dr0.smali:48` `OooO00o(Z)`
+- `res/menu/menu_main.xml:2` Toolbar menu 5 `always` + hidden `action_qrcode` (`never` reserves overflow `More options` `[820,56]`)
+- `smali/MainActivity.smali:1974` `onPrepareOptionsMenu` `findItem` `setVisible` for each `action_*`
+- Build: `apktool.yml:1` 2.9.3 apks `apks/xapk_out` base 5.9MB splits `config.*.apk`
+
+## How to Remove UI Element (button/view/...)
+1. Find layout: `grep -rn iv_space_more res/layout` or `uiautomator dump /sdcard/window_dump.xml && cat` check `bounds` `content-desc="More options"` for overflow `...`
+2. Minimal hide (keep node to avoid NPE, YAGNI): add `android:visibility="gone"` in XML e.g. `gridview_list_item.xml:10` `iv_space_more`
+3. Patch smali if code toggles visibility: `dr0.smali:99` `:cond_1` `invoke {v1,v3} setVisibility` -> `v2` (GONE=8). Mark `# ponytail: global GONE, per-item if needed`
+4. For toolbar `...` overflow: edit `menu_main.xml` + patch `MainActivity.smali` (not just XML). `never` items reserve overflow even if `visible="false"`. Change `showAsAction="never"` -> `"always"` and force `setVisible(false)` via `const/4 v4,0x0` for that `findItem` (e.g. `0x7f080047` QR). See fix `3fbed5a`.
+5. Verify XML not deleted entirely: deleting `action_qrcode` without smali null-check => `NullPointer setVisible` at `MainActivity:98` crash.
+
+## How to Add UI Element
+1. Add to layout: e.g. new `ImageView` in `fragment_home.xml` or new `<item>` in `menu_main.xml` with `app:showAsAction="always"` `android:icon` `android:title`
+2. Add id to `res/values/ids.xml` + `public.xml` (auto on rebuild) or reuse existing.
+3. Wire in smali: `findViewById` / `setOnClickListener` or `onOptionsItemSelected` `const v1,0x7f08004a` `if-ne` block. Copy existing pattern (`ry.smali` click).
+4. Keep `android:visible` handling in `onPrepareOptionsMenu` if dynamic.
+
+## How to Modify UI Layer (general)
+- Text/icons: edit `strings.xml` `drawables` (`drawable-xxhdpi/ic_space_more.png` 67B placeholder)
+- Colors/styles: `res/values/colors.xml` `styles.xml`
+- Rebuild must clear `decompiled/apktool/build` cache if resources changed.
+
+## Rebuild / Install / Verify (host fallback, JAVA_HOME=C:\Users\Ratul\.jdks\jbr-17.0.14)
+```pwsh
+$jar="B:\Studio\Tools\KiloSpace\apktool_2.9.3.jar"; $bt="C:\Users\Ratul\android-sdk\build-tools\36.0.0"
+Remove-Item decompiled/apktool/build -Recurse -Force -ErrorAction SilentlyContinue
+java -jar $jar b decompiled/apktool -o $env:TEMP\rebuilt.apk
+& "$bt\zipalign.exe" -f 4 $env:TEMP\rebuilt.apk $env:TEMP\zip.apk
+& "$bt\apksigner.bat" sign --ks $env:TEMP\debug.jks --ks-pass pass:android --key-pass pass:android --out final.apk $env:TEMP\zip.apk
+adb -s localhost:5557 install -r final.apk
+adb -s localhost:5557 shell am force-stop com.multiaccounts.cloneapps; adb -s localhost:5557 shell am start -n com.multiaccounts.cloneapps/.SplashActivity
+adb -s localhost:5557 shell uiautomator dump /sdcard/window_dump.xml; adb -s localhost:5557 shell cat /sdcard/window_dump.xml | Select-String "More options|iv_space_more"
+adb -s localhost:5557 logcat -d *:E | Select-String "FATAL|AndroidRuntime"
+```
+
+## Commit
+`git add -A && git commit -m "ui: ..."` include `decompiled/apktool/res/layout` `smali` `final.apk` `apktool.*.jar` if needed. `git push` when ready.
+
+## Pitfalls
+- Deleting menu item without smali null-check => `MainActivity:98` `NullPointer`.
+- `never` + `visible="false"` still reserves overflow `More options` -> change to `always` + forced `GONE`.
+- `iv_space_more` toggled in `dr0` both branches -> patch second branch to `GONE`.
+- `apks/xapk_out` splits require `install-multiple` or universal single after removing `pageSizeCompat`/`requiredSplitTypes`; this repo builds universal.
