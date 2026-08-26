@@ -1,4 +1,3 @@
+# keep apks xapk
 apks/xapk_out/
-decompiled/
-*.apk
-!apks/MultiCloner_1.2.5.10.xapk
+*.tmp
