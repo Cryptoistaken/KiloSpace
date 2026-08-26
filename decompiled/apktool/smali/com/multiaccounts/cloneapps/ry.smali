@@ -90,37 +90,6 @@
 
     .line 26
     :pswitch_1
-    sget p1, Lcom/multiaccounts/cloneapps/MainActivity;->OoooOo0:I
-
-    .line 27
-    .line 28
-    invoke-virtual {v0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
-
-    .line 29
-    .line 30
-    .line 31
-    sget-object p1, Lcom/multiaccounts/cloneapps/du;->OooO00o:Ljava/lang/String;
-
-    .line 32
-    .line 33
-    new-instance p1, Landroid/content/Intent;
-
-    .line 34
-    .line 35
-    const-class v1, Lcom/multiaccounts/cloneapps/views/activity/PrivacyGestureActivity;
-
-    .line 36
-    .line 37
-    invoke-direct {p1, v0, v1}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
-
-    .line 38
-    .line 39
-    .line 40
-    invoke-virtual {v0, p1}, Landroid/content/Context;->startActivity(Landroid/content/Intent;)V
-
-    .line 41
-    .line 42
-    .line 43
     return-void
 
     .line 44
