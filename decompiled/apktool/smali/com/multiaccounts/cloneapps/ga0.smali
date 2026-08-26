@@ -32,7 +32,7 @@
     .locals 0
 
     .line 1
-    add-int/lit8 p2, p2, 0x1
+    # ponytail: show 0 at leftmost, no +1 offset
 
     .line 2
     .line 3
