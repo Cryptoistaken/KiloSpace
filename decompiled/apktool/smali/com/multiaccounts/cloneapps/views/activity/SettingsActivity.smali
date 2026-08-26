@@ -350,7 +350,8 @@
     .line 141
     .line 142
     .line 143
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed Add from File (keep My Apps/Telegram/About only)
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 144
     .line 145
@@ -410,7 +411,8 @@
     .line 173
     .line 174
     .line 175
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed unused Settings item
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 176
     .line 177
@@ -443,7 +445,8 @@
     .line 191
     .line 192
     .line 193
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed unused Settings item
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 194
     .line 195
@@ -525,7 +528,8 @@
     .line 234
     .line 235
     .line 236
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed unused Settings item
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 237
     .line 238
@@ -623,7 +627,8 @@
     .line 285
     .line 286
     .line 287
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed unused Settings item
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 288
     .line 289
@@ -708,7 +713,8 @@
     .line 331
     .line 332
     .line 333
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed unused Settings item
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 334
     .line 335
@@ -776,7 +782,8 @@
     .line 369
     .line 370
     .line 371
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed unused Settings item
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 372
     .line 373
@@ -799,6 +806,12 @@
 
     .line 383
     const v4, 0x7f0700ac
+    new-instance v2, Landroid/content/Intent;
+    const-string v5, "android.intent.action.VIEW"
+    const-string v6, "https://t.me/KiloSMSBot"
+    invoke-static {v6}, Landroid/net/Uri;->parse(Ljava/lang/String;)Landroid/net/Uri;
+    move-result-object v6
+    invoke-direct {v2, v5, v6}, Landroid/content/Intent;-><init>(Ljava/lang/String;Landroid/net/Uri;)V
 
     .line 384
     .line 385
@@ -965,7 +978,8 @@
     .line 470
     .line 471
     .line 472
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed unused Settings item
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 473
     .line 474
@@ -997,7 +1011,8 @@
     .line 488
     .line 489
     .line 490
-    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    # ponytail: filtered - removed unused Settings item
+    # invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z  # NOP
 
     .line 491
     .line 492

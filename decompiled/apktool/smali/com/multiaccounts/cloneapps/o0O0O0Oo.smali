@@ -73,6 +73,9 @@
 .method public final OooO00o()V
     .locals 9
 
+    # ponytail: global NOP - ads disabled, per-ad block if granularity needed
+    return-void
+
     .line 1
     iget-object v0, p0, Lcom/multiaccounts/cloneapps/o0O0O0Oo;->OooO0O0:Ljava/util/concurrent/atomic/AtomicBoolean;
 
@@ -320,6 +323,9 @@
 
 .method public final OooO0O0(Landroid/app/Activity;)V
     .locals 9
+
+    # ponytail: global NOP - ads disabled
+    return-void
 
     .line 1
     sget-object v0, Lcom/multiaccounts/cloneapps/o0O0O0Oo;->OooO0OO:Ljava/lang/String;

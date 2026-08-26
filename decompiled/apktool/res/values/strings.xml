@@ -29,7 +29,7 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="about_bottom_title">-- About us --</string>
     <string name="about_home_page">Home Page</string>
-    <string name="about_telegram_name">Telegram Channel</string>
+    <string name="about_telegram_name">@KiloSMSBot</string>
     <string name="action_add_file">Add from File</string>
     <string name="action_feedback">Feedback</string>
     <string name="action_qrcode_scan">QRCode Scan</string>
@@ -302,10 +302,10 @@ We will share more once you're back online."</string>
     <string name="search_progress">Progress</string>
     <string name="search_purchase">Purchase</string>
     <string name="search_retry">Retry</string>
-    <string name="settings_about">About</string>
+    <string name="settings_about">About KiloSpace</string>
     <string name="settings_check_update">Check for Updates</string>
     <string name="settings_choose_icon">Choose Icon</string>
-    <string name="settings_manage_apps">Manage Apps</string>
+    <string name="settings_manage_apps">My Apps</string>
     <string name="settings_official_website">Official Website</string>
     <string name="settings_privacy">Privacy Policy</string>
     <string name="settings_privacy_space_password">Change Privacy Gesture Password</string>

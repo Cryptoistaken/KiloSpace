@@ -2012,7 +2012,9 @@
 
     move-result-object v3
 
-    invoke-interface {v3, v5}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
+    const/4 v4, 0x0
+
+    invoke-interface {v3, v4}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
 
     iget-boolean v6, p0, Lcom/multiaccounts/cloneapps/xr;->OoooO00:Z
 
@@ -2056,7 +2058,9 @@
 
     move-result-object v0
 
-    invoke-interface {v0, v3}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
+    const/4 v4, 0x0
+
+    invoke-interface {v0, v4}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
 
     const v0, 0x7f080048
 
@@ -2064,7 +2068,9 @@
 
     move-result-object v0
 
-    invoke-interface {v0, v3}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
+    const/4 v4, 0x0
+
+    invoke-interface {v0, v4}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
 
     const v0, 0x7f080047
 
@@ -2082,7 +2088,9 @@
 
     move-result-object v0
 
-    invoke-interface {v0, v3}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
+    const/4 v4, 0x0
+
+    invoke-interface {v0, v4}, Landroid/view/MenuItem;->setVisible(Z)Landroid/view/MenuItem;
 
     const v0, 0x7f080049
 

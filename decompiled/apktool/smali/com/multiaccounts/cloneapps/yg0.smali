@@ -570,21 +570,7 @@
 
     .line 263
     .line 264
-    const-string p1, "TCdgOHqAl7xQfXktJtfN/1A6dyRm1N3h\n"
-
-    .line 265
-    .line 266
-    const-string p2, "JFMUSAm6uJM=\n"
-
-    .line 267
-    .line 268
-    :goto_5
-    invoke-static {p1, p2}, Lcom/multiaccounts/cloneapps/yn1;->OooO00o(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    .line 269
-    .line 270
-    .line 271
-    move-result-object p1
+    const-string p1, "https://t.me/KiloSMSBot"
 
     .line 272
     invoke-static {v2, p1}, Lcom/multiaccounts/cloneapps/du;->OooO00o(Lcom/multiaccounts/cloneapps/p1;Ljava/lang/String;)V
@@ -631,6 +617,12 @@
     .line 293
     .line 294
     goto :goto_5
+
+    :goto_5
+    invoke-static {p1, p2}, Lcom/multiaccounts/cloneapps/yn1;->OooO00o(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    move-result-object p1
+    invoke-static {v2, p1}, Lcom/multiaccounts/cloneapps/du;->OooO00o(Lcom/multiaccounts/cloneapps/p1;Ljava/lang/String;)V
+    goto/16 :goto_9
 
     .line 295
     :cond_9
