@@ -1,8 +1,0 @@
-    29008  1981-01-01 01:01   lib/arm64-v8a/libimage_processing_util_jni.so
-     3720  1981-01-01 01:01   lib/arm64-v8a/libmulticloner.so
-     4832  1981-01-01 01:01   lib/arm64-v8a/libsurface_util_jni.so
-    18680  1981-01-01 01:01   lib/arm64-v8a/libzkjkttl.so
-    20380  1981-01-01 01:01   lib/armeabi-v7a/libimage_processing_util_jni.so
-     2520  1981-01-01 01:01   lib/armeabi-v7a/libmulticloner.so
-     3440  1981-01-01 01:01   lib/armeabi-v7a/libsurface_util_jni.so
-    18336  1981-01-01 01:01   lib/armeabi-v7a/libzkjkttl.so
