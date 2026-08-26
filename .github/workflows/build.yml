@@ -76,8 +76,9 @@ jobs:
         run: |
           if [ -d "decompiled/apktool" ]; then
             echo "Rebuilding from decompiled/apktool (UI mods here)..."
-            # Fix Android 16 attribute not supported by apktool 2.9.3
-            sed -i '/pageSizeCompat/d' decompiled/apktool/AndroidManifest.xml || true
+            # Fix Android 16 attribute not supported by apktool 2.9.3 - remove attribute not whole line
+            sed -i 's/ android:pageSizeCompat="[^"]*"//g' decompiled/apktool/AndroidManifest.xml || true
+            sed -i 's/ android:enableOnBackInvokedCallback="[^"]*"//g' decompiled/apktool/AndroidManifest.xml || true
             echo "Fixed manifest pageSizeCompat"
             apktool b decompiled/apktool -o /tmp/rebuilt.apk 2>&1 | tail -30
             echo "Signing with debug key..."
