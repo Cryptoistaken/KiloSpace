@@ -1,3 +1,8 @@
 # keep apks xapk
 apks/xapk_out/
 *.tmp
+
+node_modules/
+package.json
+package-lock.json
+
