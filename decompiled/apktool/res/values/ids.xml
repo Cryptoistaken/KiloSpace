@@ -297,6 +297,7 @@
     <item type="id" name="popup_window_hide_app" />
     <item type="id" name="popup_window_title" />
     <item type="id" name="popup_window_uninstall" />
+    <item type="id" name="popup_window_add_app" />
     <item type="id" name="preview_view" />
     <item type="id" name="privacy_apps_gridview" />
     <item type="id" name="privacy_space_root" />

@@ -60,6 +60,39 @@
     const/4 v1, 0x0
 
     .line 13
+    const v2, 0x7f0802bd
+
+    if-ne p1, v2, :cond_add_app
+
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/OooO0O0;->OooO0oo:Lcom/multiaccounts/cloneapps/OooO00o;
+
+    check-cast v2, Lcom/multiaccounts/cloneapps/f;
+
+    iget-object v3, v2, Lcom/multiaccounts/cloneapps/f;->OooO00o:Landroid/app/Activity;
+
+    new-instance v4, Landroid/content/Intent;
+
+    const-class v5, Lcom/multiaccounts/cloneapps/views/activity/CloneAppActivity;
+
+    invoke-direct {v4, v3, v5}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
+
+    const-string v5, "zA0JOEUI7nLMFhQVUST4cMAR\n"
+
+    const-string v1, "qXV9SiRXnQI=\n"
+
+    invoke-static {v5, v1}, Lcom/multiaccounts/cloneapps/yn1;->OooO00o(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v5
+
+    iget v2, v2, Lcom/multiaccounts/cloneapps/f;->OooO0OO:I
+
+    invoke-virtual {v4, v5, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
+
+    invoke-virtual {v3, v4}, Landroid/content/Context;->startActivity(Landroid/content/Intent;)V
+
+    goto/16 :goto_0
+
+    :cond_add_app
     const v2, 0x7f0801db
 
     .line 14

@@ -522,6 +522,18 @@
     .line 243
     invoke-virtual {v6, v0}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
+    iget-object v6, v0, Lcom/multiaccounts/cloneapps/OooO0O0;->OooO:Landroid/view/View;
+
+    const v9, 0x7f0802bd
+
+    invoke-virtual {v6, v9}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object v6
+
+    check-cast v6, Landroid/widget/RelativeLayout;
+
+    invoke-virtual {v6, v0}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+
     .line 244
     .line 245
     .line 246

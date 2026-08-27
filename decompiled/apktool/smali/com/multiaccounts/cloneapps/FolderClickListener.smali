@@ -90,6 +90,8 @@
     move-result-object v0
     invoke-virtual {v0}, Landroid/app/AlertDialog$Builder;->create()Landroid/app/AlertDialog;
     move-result-object v0
+    const/4 v2, 0x1
+    invoke-virtual {v0, v2}, Landroid/app/Dialog;->setCanceledOnTouchOutside(Z)V
     invoke-virtual {v0}, Landroid/app/AlertDialog;->show()V
     :cond_return
     return-void

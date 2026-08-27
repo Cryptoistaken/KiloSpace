@@ -31,9 +31,11 @@
     invoke-interface {v0}, Ljava/util/List;->size()I
     move-result v0
     const/4 v1, 0x1
-    if-le v1, v0, :cond_folder_check
-    return v0
+    if-le v0, v1, :cond_normal
     :cond_folder_check
+    iget-object v4, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    instance-of v4, v4, Lcom/multiaccounts/cloneapps/views/activity/CloneAppActivity;
+    if-nez v4, :cond_normal
     iget-object v1, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
     const-string v2, "kilospaces_prefs"
     const/4 v3, 0x0
@@ -86,8 +88,23 @@
     iget-object v0, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
     invoke-interface {v0}, Ljava/util/List;->size()I
     move-result v0
+    # ponytail: guard empty/out of bounds (fab clone list empty)
+    if-gt v0, p1, :cond_size_ok
+    if-eqz p2, :cond_create_dummy
+    return-object p2
+    :cond_create_dummy
+    new-instance v0, Landroid/view/View;
+    iget-object v1, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-direct {v0, v1}, Landroid/view/View;-><init>(Landroid/content/Context;)V
+    return-object v0
+    :cond_size_ok
+    # ponytail: FAP never folder, home only when size>1 in grid
+    iget-object v1, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    instance-of v1, v1, Lcom/multiaccounts/cloneapps/views/activity/CloneAppActivity;
+    if-nez v1, :cond_normal_start
+    :cond_check_size
     const/4 v1, 0x1
-    if-le v1, v0, :cond_normal_start
+    if-le v0, v1, :cond_normal_start
     iget-object v1, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
     const-string v2, "kilospaces_prefs"
     const/4 v3, 0x0
