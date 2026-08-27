@@ -1507,6 +1507,22 @@
     invoke-virtual {v1, v2}, Landroid/widget/ImageView;->setVisibility(I)V
 
     .line 558
+    # ponytail: wire View toggle at toolbar top-right single for all apps
+    :try_view
+    const v1, 0x7f0802c7
+    invoke-virtual {v0, v1}, Lcom/multiaccounts/cloneapps/MainActivity;->findViewById(I)Landroid/view/View;
+    move-result-object v1
+    if-eqz v1, :cond_view_end
+    new-instance v2, Lcom/multiaccounts/cloneapps/ViewToggle;
+    invoke-direct {v2, v0}, Lcom/multiaccounts/cloneapps/ViewToggle;-><init>(Landroid/app/Activity;)V
+    invoke-virtual {v1, v2}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+    :cond_view_end
+    :try_view_end
+    .catch Ljava/lang/Exception; {:try_view .. :try_view_end} :catch_view
+    goto :after_view
+    :catch_view
+    nop
+    :after_view
     .line 559
     .line 560
     return-void
