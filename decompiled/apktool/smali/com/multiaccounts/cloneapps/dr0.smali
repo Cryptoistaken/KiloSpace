@@ -106,7 +106,7 @@
 .end method
 
 .method public final OooO0O0(Landroid/view/View;Ljava/util/List;)V
-    .locals 2
+    .locals 5
 
     .line 1
     new-instance v0, Lcom/multiaccounts/cloneapps/ir;
@@ -189,6 +189,38 @@
     .line 41
     .line 42
     invoke-virtual {p1, v0}, Landroid/widget/GridView;->setAdapter(Landroid/widget/ListAdapter;)V
+
+    # view columns per pref
+    iget-object v0, p0, Lcom/multiaccounts/cloneapps/dr0;->OooO00o:Landroid/app/Activity;
+    const-string v1, "kilospaces_prefs"
+    const/4 v2, 0x0
+    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+    move-result-object v0
+    const-string v1, "view_mode"
+    const-string v2, "grid4"
+    invoke-interface {v0, v1, v2}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    move-result-object v0
+    const-string v1, "list"
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v1
+    if-eqz v1, :cond_grid6_check
+    iget-object v1, p0, Lcom/multiaccounts/cloneapps/dr0;->OooO0o0:Landroid/widget/GridView;
+    const/4 v2, 0x1
+    invoke-virtual {v1, v2}, Landroid/widget/GridView;->setNumColumns(I)V
+    goto :cond_after_columns
+    :cond_grid6_check
+    const-string v1, "grid6"
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v0
+    iget-object v1, p0, Lcom/multiaccounts/cloneapps/dr0;->OooO0o0:Landroid/widget/GridView;
+    if-eqz v0, :cond_grid4
+    const/4 v0, 0x6
+    invoke-virtual {v1, v0}, Landroid/widget/GridView;->setNumColumns(I)V
+    goto :cond_after_columns
+    :cond_grid4
+    const/4 v0, 0x4
+    invoke-virtual {v1, v0}, Landroid/widget/GridView;->setNumColumns(I)V
+    :cond_after_columns
 
     .line 43
     .line 44

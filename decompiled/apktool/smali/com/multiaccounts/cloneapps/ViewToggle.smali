@@ -76,5 +76,7 @@
     invoke-static {v0, v1, v3}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
     move-result-object v1
     invoke-virtual {v1}, Landroid/widget/Toast;->show()V
+    # refresh UI for new view mode (recreate to reload Grid)
+    invoke-virtual {v0}, Landroid/app/Activity;->recreate()V
     return-void
 .end method

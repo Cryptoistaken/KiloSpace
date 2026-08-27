@@ -1516,6 +1516,34 @@
     new-instance v2, Lcom/multiaccounts/cloneapps/ViewToggle;
     invoke-direct {v2, v0}, Lcom/multiaccounts/cloneapps/ViewToggle;-><init>(Landroid/app/Activity;)V
     invoke-virtual {v1, v2}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+    # set initial text from pref (fix auto-revert to View)
+    check-cast v1, Landroid/widget/TextView;
+    const-string v2, "kilospaces_prefs"
+    const/4 v3, 0x0
+    invoke-virtual {v0, v2, v3}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+    move-result-object v2
+    const-string v3, "view_mode"
+    const-string v4, "grid4"
+    invoke-interface {v2, v3, v4}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    move-result-object v2
+    const-string v3, "list"
+    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v3
+    if-eqz v3, :cond_view_grid4
+    const-string v3, "List"
+    invoke-virtual {v1, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+    goto :cond_view_end
+    :cond_view_grid4
+    const-string v3, "grid4"
+    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v3
+    if-eqz v3, :cond_view_grid6
+    const-string v3, "Grid x4"
+    invoke-virtual {v1, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+    goto :cond_view_end
+    :cond_view_grid6
+    const-string v3, "Grid x6"
+    invoke-virtual {v1, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
     :cond_view_end
     :try_view_end
     .catch Ljava/lang/Exception; {:try_view .. :try_view_end} :catch_view

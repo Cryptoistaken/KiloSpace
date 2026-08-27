@@ -26,15 +26,35 @@
 
 # virtual methods
 .method public final getCount()I
-    .locals 1
-
-    .line 1
+    .locals 5
     iget-object v0, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
-
     invoke-interface {v0}, Ljava/util/List;->size()I
-
     move-result v0
-
+    const/4 v1, 0x1
+    if-le v1, v0, :cond_folder_check
+    return v0
+    :cond_folder_check
+    iget-object v1, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    const-string v2, "kilospaces_prefs"
+    const/4 v3, 0x0
+    invoke-virtual {v1, v2, v3}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+    move-result-object v1
+    const-string v2, "view_mode"
+    const-string v3, "grid4"
+    invoke-interface {v1, v2, v3}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    move-result-object v1
+    if-eqz v1, :cond_is_folder
+    const-string v2, "list"
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v2
+    if-nez v2, :cond_normal
+    :cond_is_folder
+    const/4 v0, 0x1
+    return v0
+    :cond_normal
+    iget-object v0, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v0}, Ljava/util/List;->size()I
+    move-result v0
     return v0
 .end method
 
@@ -61,9 +81,218 @@
 .end method
 
 .method public final getView(ILandroid/view/View;Landroid/view/ViewGroup;)Landroid/view/View;
-    .locals 6
+    .locals 12
+    # --- folder per No. check minimal ---
+    iget-object v0, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v0}, Ljava/util/List;->size()I
+    move-result v0
+    const/4 v1, 0x1
+    if-le v1, v0, :cond_normal_start
+    iget-object v1, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    const-string v2, "kilospaces_prefs"
+    const/4 v3, 0x0
+    invoke-virtual {v1, v2, v3}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+    move-result-object v1
+    const-string v2, "view_mode"
+    const-string v3, "grid4"
+    invoke-interface {v1, v2, v3}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    move-result-object v1
+    if-eqz v1, :folder_branch
+    const-string v2, "list"
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v2
+    if-nez v2, :cond_normal_start
+    :folder_branch
+    # inflate folder_preview_item via getIdentifier
+    iget-object v1, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    move-result-object v1
+    const-string v2, "folder_preview_item"
+    const-string v3, "layout"
+    iget-object v4, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v4}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+    move-result-object v4
+    invoke-virtual {v1, v2, v3, v4}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+    move-result v1
+    if-eqz v1, :cond_normal_start
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-static {v2}, Landroid/view/LayoutInflater;->from(Landroid/content/Context;)Landroid/view/LayoutInflater;
+    move-result-object v2
+    const/4 v3, 0x0
+    invoke-virtual {v2, v1, v3}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;)Landroid/view/View;
+    move-result-object v1
+    if-eqz v1, :cond_normal_start
+    # tv_folder_name
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v2}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    move-result-object v2
+    const-string v3, "tv_folder_name"
+    const-string v4, "id"
+    iget-object v5, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v5}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+    move-result-object v5
+    invoke-virtual {v2, v3, v4, v5}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+    move-result v2
+    if-eqz v2, :cond_skip_folder_text
+    invoke-virtual {v1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+    move-result-object v2
+    if-eqz v2, :cond_skip_folder_text
+    check-cast v2, Landroid/widget/TextView;
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3}, Ljava/util/List;->size()I
+    move-result v3
+    new-instance v4, Ljava/lang/StringBuilder;
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+    const-string v5, "Folder ("
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    const-string v3, ")"
+    invoke-virtual {v4, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-result-object v3
+    invoke-virtual {v2, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+    :cond_skip_folder_text
+    # preview icons 0..3 unrolled
+    # icon 0
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v2}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    move-result-object v2
+    const-string v3, "iv_folder_preview_0"
+    const-string v4, "id"
+    iget-object v5, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v5}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+    move-result-object v5
+    invoke-virtual {v2, v3, v4, v5}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+    move-result v2
+    if-eqz v2, :cond_icon1
+    invoke-virtual {v1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+    move-result-object v2
+    if-eqz v2, :cond_icon1
+    check-cast v2, Landroid/widget/ImageView;
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3}, Ljava/util/List;->size()I
+    move-result v3
+    const/4 v4, 0x0
+    if-gt v3, v4, :icon0_has
+    const/16 v3, 0x8
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setVisibility(I)V
+    goto :cond_icon1
+    :icon0_has
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3, v4}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    move-result-object v3
+    check-cast v3, Lcom/multiaccounts/cloneapps/O0O0;
+    iget-object v3, v3, Lcom/multiaccounts/cloneapps/O0O0;->OooO0o0:Landroid/graphics/drawable/Drawable;
+    if-eqz v3, :cond_icon1
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setImageDrawable(Landroid/graphics/drawable/Drawable;)V
+    :cond_icon1
+    # icon 1
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v2}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    move-result-object v2
+    const-string v3, "iv_folder_preview_1"
+    const-string v4, "id"
+    iget-object v5, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v5}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+    move-result-object v5
+    invoke-virtual {v2, v3, v4, v5}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+    move-result v2
+    if-eqz v2, :cond_icon2
+    invoke-virtual {v1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+    move-result-object v2
+    if-eqz v2, :cond_icon2
+    check-cast v2, Landroid/widget/ImageView;
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3}, Ljava/util/List;->size()I
+    move-result v3
+    const/4 v4, 0x1
+    if-gt v3, v4, :icon1_has
+    const/16 v3, 0x8
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setVisibility(I)V
+    goto :cond_icon2
+    :icon1_has
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3, v4}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    move-result-object v3
+    check-cast v3, Lcom/multiaccounts/cloneapps/O0O0;
+    iget-object v3, v3, Lcom/multiaccounts/cloneapps/O0O0;->OooO0o0:Landroid/graphics/drawable/Drawable;
+    if-eqz v3, :cond_icon2
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setImageDrawable(Landroid/graphics/drawable/Drawable;)V
+    :cond_icon2
+    # icon 2
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v2}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    move-result-object v2
+    const-string v3, "iv_folder_preview_2"
+    const-string v4, "id"
+    iget-object v5, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v5}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+    move-result-object v5
+    invoke-virtual {v2, v3, v4, v5}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+    move-result v2
+    if-eqz v2, :cond_icon3
+    invoke-virtual {v1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+    move-result-object v2
+    if-eqz v2, :cond_icon3
+    check-cast v2, Landroid/widget/ImageView;
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3}, Ljava/util/List;->size()I
+    move-result v3
+    const/4 v4, 0x2
+    if-gt v3, v4, :icon2_has
+    const/16 v3, 0x8
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setVisibility(I)V
+    goto :cond_icon3
+    :icon2_has
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3, v4}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    move-result-object v3
+    check-cast v3, Lcom/multiaccounts/cloneapps/O0O0;
+    iget-object v3, v3, Lcom/multiaccounts/cloneapps/O0O0;->OooO0o0:Landroid/graphics/drawable/Drawable;
+    if-eqz v3, :cond_icon3
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setImageDrawable(Landroid/graphics/drawable/Drawable;)V
+    :cond_icon3
+    # icon 3
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v2}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    move-result-object v2
+    const-string v3, "iv_folder_preview_3"
+    const-string v4, "id"
+    iget-object v5, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    invoke-virtual {v5}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+    move-result-object v5
+    invoke-virtual {v2, v3, v4, v5}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+    move-result v2
+    if-eqz v2, :cond_set_click
+    invoke-virtual {v1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+    move-result-object v2
+    if-eqz v2, :cond_set_click
+    check-cast v2, Landroid/widget/ImageView;
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3}, Ljava/util/List;->size()I
+    move-result v3
+    const/4 v4, 0x3
+    if-gt v3, v4, :icon3_has
+    const/16 v3, 0x8
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setVisibility(I)V
+    goto :cond_set_click
+    :icon3_has
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-interface {v3, v4}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    move-result-object v3
+    check-cast v3, Lcom/multiaccounts/cloneapps/O0O0;
+    iget-object v3, v3, Lcom/multiaccounts/cloneapps/O0O0;->OooO0o0:Landroid/graphics/drawable/Drawable;
+    if-eqz v3, :cond_set_click
+    invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setImageDrawable(Landroid/graphics/drawable/Drawable;)V
+    :cond_set_click
+    new-instance v2, Lcom/multiaccounts/cloneapps/FolderClickListener;
+    iget-object v3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
+    iget-object v4, p0, Lcom/multiaccounts/cloneapps/ir;->OooO0O0:Ljava/util/List;
+    invoke-direct {v2, v3, v4}, Lcom/multiaccounts/cloneapps/FolderClickListener;-><init>(Landroid/content/Context;Ljava/util/List;)V
+    invoke-virtual {v1, v2}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+    return-object v1
 
-    .line 1
+    :cond_normal_start
     iget-object p3, p0, Lcom/multiaccounts/cloneapps/ir;->OooO00o:Landroid/content/Context;
 
     .line 2
