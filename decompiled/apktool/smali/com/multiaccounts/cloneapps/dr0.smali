@@ -16,7 +16,7 @@
 
 .field public OooO0o0:Landroid/widget/GridView;
 
-.field public OooO0oO:Landroid/widget/LinearLayout;
+.field public OooO0oO:Landroid/view/ViewGroup;
 
 .field public OooO0oo:Landroid/widget/RelativeLayout;
 

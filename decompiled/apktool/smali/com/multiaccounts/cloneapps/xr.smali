@@ -260,7 +260,7 @@
 
     .line 50
     .line 51
-    iget-object v3, v2, Lcom/multiaccounts/cloneapps/dr0;->OooO0oO:Landroid/widget/LinearLayout;
+    iget-object v3, v2, Lcom/multiaccounts/cloneapps/dr0;->OooO0oO:Landroid/view/ViewGroup;
 
     .line 52
     .line 53

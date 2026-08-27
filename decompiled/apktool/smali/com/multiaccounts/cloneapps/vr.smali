@@ -48,7 +48,7 @@
 
 # virtual methods
 .method public final run()V
-    .locals 10
+    .locals 14
 
     .line 1
     iget v0, p0, Lcom/multiaccounts/cloneapps/vr;->OooO0oo:I
@@ -133,79 +133,9 @@
 
     .line 41
     :cond_1
-    const v6, 0x7f0801ed
+    # ponytail: unify first grid into outer GridLayout 1 2 3 4
+    goto :pswitch_0
 
-    .line 42
-    .line 43
-    .line 44
-    invoke-virtual {v1, v6}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
-    .line 45
-    .line 46
-    .line 47
-    move-result-object v6
-
-    .line 48
-    check-cast v6, Landroid/widget/RelativeLayout;
-
-    .line 49
-    .line 50
-    iput-object v6, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0oo:Landroid/widget/RelativeLayout;
-
-    .line 51
-    .line 52
-    const/4 v7, 0x0
-
-    .line 53
-    invoke-virtual {v6, v7}, Landroid/view/View;->setVisibility(I)V
-
-    .line 54
-    .line 55
-    .line 56
-    const v6, 0x7f0800f5
-
-    .line 57
-    .line 58
-    .line 59
-    invoke-virtual {v1, v6}, Landroid/view/View;->findViewById(I)Landroid/view/View;
-
-    .line 60
-    .line 61
-    .line 62
-    move-result-object v6
-
-    .line 63
-    check-cast v6, Landroid/widget/GridView;
-
-    .line 64
-    .line 65
-    iput-object v6, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0o0:Landroid/widget/GridView;
-
-    .line 66
-    .line 67
-    invoke-virtual {v4, v1, v5}, Lcom/multiaccounts/cloneapps/dr0;->OooO0O0(Landroid/view/View;Ljava/util/List;)V
-
-    .line 68
-    .line 69
-    .line 70
-    invoke-virtual {v0, v2, v4}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
-
-    .line 71
-    .line 72
-    .line 73
-    invoke-static {v3}, Lcom/multiaccounts/cloneapps/tn0;->OooO00o(Landroid/app/Activity;)Z
-
-    .line 74
-    .line 75
-    .line 76
-    move-result v0
-
-    .line 77
-    invoke-virtual {v4, v0, v3}, Lcom/multiaccounts/cloneapps/dr0;->OooO0OO(ZLandroid/app/Activity;)V
-
-    .line 78
-    .line 79
-    .line 80
     :goto_0
     return-void
 
@@ -290,11 +220,43 @@
     move-result-object v7
 
     .line 120
-    check-cast v7, Landroid/widget/LinearLayout;
+    check-cast v7, Landroid/view/ViewGroup;
 
     .line 121
     .line 122
-    iput-object v7, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0oO:Landroid/widget/LinearLayout;
+    iput-object v7, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0oO:Landroid/view/ViewGroup;
+
+    # ponytail: outer grid 1 2 3 4 / 5 6 7 8 per view_mode
+    const-string v8, "kilospaces_prefs"
+    const/4 v9, 0x0
+    invoke-virtual {v3, v8, v9}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+    move-result-object v8
+    const-string v9, "view_mode"
+    const-string v10, "grid4"
+    invoke-interface {v8, v9, v10}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    move-result-object v8
+    const/4 v9, 0x1
+    const-string v10, "list"
+    invoke-virtual {v8, v10}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v10
+    if-eqz v10, :cond_grid_outer_6
+    const/4 v9, 0x1
+    goto :cond_set_outer_cols
+    :cond_grid_outer_6
+    const-string v10, "grid6"
+    invoke-virtual {v8, v10}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v8
+    if-eqz v8, :cond_grid_outer_4
+    const/4 v9, 0x6
+    goto :cond_set_outer_cols
+    :cond_grid_outer_4
+    const/4 v9, 0x4
+    :cond_set_outer_cols
+    instance-of v8, v7, Landroid/widget/GridLayout;
+    if-eqz v8, :cond_not_grid_outer
+    check-cast v7, Landroid/widget/GridLayout;
+    invoke-virtual {v7, v9}, Landroid/widget/GridLayout;->setColumnCount(I)V
+    :cond_not_grid_outer
 
     .line 123
     .line 124
@@ -402,7 +364,7 @@
 
     .line 177
     .line 178
-    iget-object v7, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0oO:Landroid/widget/LinearLayout;
+    iget-object v7, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0oO:Landroid/view/ViewGroup;
 
     .line 179
     .line 180
@@ -414,10 +376,10 @@
     move-result v7
 
     .line 184
-    add-int/lit8 v8, v2, -0x1
-
-    .line 185
-    .line 186
+    move v8, v2
+    if-gez v8, :cond_check_bounds
+    const/4 v8, 0x0
+    :cond_check_bounds
     if-le v8, v7, :cond_4
 
     .line 187
@@ -430,14 +392,30 @@
 
     .line 190
     :goto_1
-    iget-object v8, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0oO:Landroid/widget/LinearLayout;
+    iget-object v8, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0oO:Landroid/view/ViewGroup;
 
     .line 191
     .line 192
     iget-object v9, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0o:Landroid/view/View;
 
     .line 193
-    .line 194
+    # ponytail: GridLayout child weight so 1 2 3 4 fills row
+    instance-of v10, v8, Landroid/widget/GridLayout;
+    if-eqz v10, :cond_skip_grid_params
+    const v10, -0x80000000
+    const/high16 v11, 0x3f800000
+    invoke-static {v10, v11}, Landroid/widget/GridLayout;->spec(IF)Landroid/widget/GridLayout$Spec;
+    move-result-object v12
+    invoke-static {v10}, Landroid/widget/GridLayout;->spec(I)Landroid/widget/GridLayout$Spec;
+    move-result-object v13
+    new-instance v10, Landroid/widget/GridLayout$LayoutParams;
+    invoke-direct {v10, v13, v12}, Landroid/widget/GridLayout$LayoutParams;-><init>(Landroid/widget/GridLayout$Spec;Landroid/widget/GridLayout$Spec;)V
+    const/4 v11, 0x0
+    iput v11, v10, Landroid/widget/GridLayout$LayoutParams;->width:I
+    const/4 v11, -0x2
+    iput v11, v10, Landroid/widget/GridLayout$LayoutParams;->height:I
+    invoke-virtual {v9, v10}, Landroid/view/View;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
+    :cond_skip_grid_params
     invoke-virtual {v8, v9, v7}, Landroid/view/ViewGroup;->addView(Landroid/view/View;I)V
 
     .line 195

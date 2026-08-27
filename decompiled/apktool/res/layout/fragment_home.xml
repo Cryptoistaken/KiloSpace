@@ -16,7 +16,7 @@
                     <TextView android:textSize="12.0sp" android:textStyle="bold" android:textColor="@color/black" android:id="@id/tv_user_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </RelativeLayout>
-            <LinearLayout android:orientation="vertical" android:id="@id/ll_grid_view_list" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            <android.widget.GridLayout android:columnCount="4" android:orientation="horizontal" android:useDefaultMargins="false" android:alignmentMode="alignBounds" android:id="@id/ll_grid_view_list" android:layout_width="fill_parent" android:layout_height="wrap_content" />
             <View android:id="@id/v_gridview_item_split2" android:layout_width="fill_parent" android:layout_height="120.0dip" />
         </LinearLayout>
     </com.multiaccounts.cloneapps.views.view.MSView>
