@@ -846,10 +846,32 @@
     .line 4
     invoke-virtual {p0}, Lcom/multiaccounts/cloneapps/xr;->OooOo0o()V
 
+    # ponytail: refresh same-space clones without restart - update existing dr0s from wt
+    const/4 v0, 0x0
+    iget-object v1, p0, Lcom/multiaccounts/cloneapps/xr;->Oooo0oo:Landroid/util/SparseArray;
+    invoke-virtual {v1}, Landroid/util/SparseArray;->size()I
+    move-result v2
+    :refresh_loop
+    if-ge v0, v2, :refresh_done
+    invoke-virtual {v1, v0}, Landroid/util/SparseArray;->valueAt(I)Ljava/lang/Object;
+    move-result-object v3
+    check-cast v3, Lcom/multiaccounts/cloneapps/dr0;
+    iget v4, v3, Lcom/multiaccounts/cloneapps/dr0;->OooO0O0:I
+    iget-object v5, v3, Lcom/multiaccounts/cloneapps/dr0;->OooO0OO:Lcom/multiaccounts/cloneapps/wt;
+    invoke-virtual {v5, v4}, Lcom/multiaccounts/cloneapps/wt;->OooOOo0(I)Ljava/util/List;
+    move-result-object v5
+    iget-object v6, v3, Lcom/multiaccounts/cloneapps/dr0;->OooO0o:Landroid/view/View;
+    invoke-virtual {v3, v6, v5}, Lcom/multiaccounts/cloneapps/dr0;->OooO0O0(Landroid/view/View;Ljava/util/List;)V
+    iget-object v5, v3, Lcom/multiaccounts/cloneapps/dr0;->OooO0Oo:Lcom/multiaccounts/cloneapps/ir;
+    invoke-virtual {v5}, Landroid/widget/BaseAdapter;->notifyDataSetChanged()V
+    add-int/lit8 v0, v0, 0x1
+    goto :refresh_loop
+    :refresh_done
+
     .line 5
     .line 6
     .line 7
-    iget-boolean v0, p0, Lcom/multiaccounts/cloneapps/xr;->OoooO0O:Z
+    iget-boolean v0, p0, Lcom/multiaccounts/cloneapps/xr;->OoooO00:Z
 
     .line 8
     .line 9

@@ -159,12 +159,22 @@
     .line 89
     if-eqz v4, :cond_2
 
-    .line 90
-    .line 91
-    goto/16 :goto_2
+    # ponytail: update existing dr0 instead of return (fix same-space stale clone)
+    iget-object v5, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0OO:Lcom/multiaccounts/cloneapps/wt;
+    invoke-virtual {v5, v2}, Lcom/multiaccounts/cloneapps/wt;->OooOOo0(I)Ljava/util/List;
+    move-result-object v5
+    invoke-static {v5}, Lcom/multiaccounts/cloneapps/ooOOOOoo;->OooO(Ljava/util/Collection;)Z
+    move-result v6
+    if-eqz v6, :cond_update_has_data
+    goto :goto_2
+    :cond_update_has_data
+    iget-boolean v6, v3, Lcom/multiaccounts/cloneapps/xr;->OoooO00:Z
+    invoke-virtual {v4, v1, v5}, Lcom/multiaccounts/cloneapps/dr0;->OooO0O0(Landroid/view/View;Ljava/util/List;)V
+    invoke-virtual {v4, v6}, Lcom/multiaccounts/cloneapps/dr0;->OooO00o(Z)V
+    iget-object v5, v4, Lcom/multiaccounts/cloneapps/dr0;->OooO0Oo:Lcom/multiaccounts/cloneapps/ir;
+    invoke-virtual {v5}, Landroid/widget/BaseAdapter;->notifyDataSetChanged()V
+    goto :goto_2
 
-    .line 92
-    .line 93
     :cond_2
     new-instance v4, Lcom/multiaccounts/cloneapps/dr0;
 
