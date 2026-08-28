@@ -190,10 +190,32 @@
     .line 42
     invoke-virtual {p1, v0}, Landroid/widget/GridView;->setAdapter(Landroid/widget/ListAdapter;)V
 
-    # ponytail: inner 1 col so app fills per-space cell, outer GridLayout handles 1/4/6
-    iget-object v0, p0, Lcom/multiaccounts/cloneapps/dr0;->OooO0o0:Landroid/widget/GridView;
+    # ponytail: list 4 per row left, grid 1 per row (outer handles 1/4/6)
+    iget-object v0, p0, Lcom/multiaccounts/cloneapps/dr0;->OooO00o:Landroid/app/Activity;
+    const-string v1, "kilospaces_prefs"
+    const/4 v2, 0x0
+    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+    move-result-object v0
+    const-string v1, "view_mode"
+    const-string v2, "grid4"
+    invoke-interface {v0, v1, v2}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    move-result-object v0
+    const-string v1, "list"
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    move-result v1
+    if-eqz v1, :cond_grid_inner
+    const/4 v1, 0x4
+    goto :cond_set_inner
+    :cond_grid_inner
     const/4 v1, 0x1
+    :cond_set_inner
+    iget-object v0, p0, Lcom/multiaccounts/cloneapps/dr0;->OooO0o0:Landroid/widget/GridView;
     invoke-virtual {v0, v1}, Landroid/widget/GridView;->setNumColumns(I)V
+    # left align for list
+    const/4 v2, 0x4
+    if-ne v1, v2, :cond_after_columns
+    const/4 v2, 0x3
+    invoke-virtual {v0, v2}, Landroid/widget/GridView;->setGravity(I)V
     :cond_after_columns
 
     .line 43
