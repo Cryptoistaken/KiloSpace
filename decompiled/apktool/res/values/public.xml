@@ -3180,6 +3180,8 @@
     <public type="id" name="popup_window_title" id="0x7f0801da" />
     <public type="id" name="popup_window_uninstall" id="0x7f0801db" />
     <public type="id" name="popup_window_add_app" id="0x7f0802bd" />
+    <public type="id" name="view_mode_bar" id="0x7f0802c6" />
+    <public type="id" name="view_mode_btn" id="0x7f0802c7" />
     <public type="id" name="position" id="0x7f0801dc" />
     <public type="id" name="postLayout" id="0x7f0801dd" />
     <public type="id" name="preview_view" id="0x7f0801de" />
