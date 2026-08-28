@@ -82,6 +82,34 @@
     iget-object v4, p0, Lcom/multiaccounts/cloneapps/FolderClickListener;->list:Ljava/util/List;
     invoke-direct {v2, v3, v4}, Lcom/multiaccounts/cloneapps/FolderInnerAdapter;-><init>(Landroid/content/Context;Ljava/util/List;)V
     invoke-virtual {v0, v2}, Landroid/widget/GridView;->setAdapter(Landroid/widget/ListAdapter;)V
+    # ponytail: wire same launch + popup as main grid via mu/OooO0o/OooO (userId from list head OooOO0)
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/FolderClickListener;->list:Ljava/util/List;
+    invoke-interface {v2}, Ljava/util/List;->size()I
+    move-result v2
+    if-eqz v2, :cond_show
+    iget-object v2, p0, Lcom/multiaccounts/cloneapps/FolderClickListener;->list:Ljava/util/List;
+    const/4 v3, 0x0
+    invoke-interface {v2, v3}, Ljava/util/List;->get(I)Ljava/lang/Object;
+    move-result-object v2
+    check-cast v2, Lcom/multiaccounts/cloneapps/O0O0;
+    iget v2, v2, Lcom/multiaccounts/cloneapps/O0O0;->OooOO0:I
+    new-instance v3, Lcom/multiaccounts/cloneapps/mu;
+    invoke-direct {v3}, Ljava/lang/Object;-><init>()V
+    iget-object v4, p0, Lcom/multiaccounts/cloneapps/FolderClickListener;->ctx:Landroid/content/Context;
+    check-cast v4, Landroid/app/Activity;
+    iput-object v4, v3, Lcom/multiaccounts/cloneapps/mu;->OooO0O0:Landroid/app/Activity;
+    iput v2, v3, Lcom/multiaccounts/cloneapps/mu;->OooO00o:I
+    invoke-static {}, Lcom/multiaccounts/cloneapps/wt;->OooOOOo()Lcom/multiaccounts/cloneapps/wt;
+    move-result-object v2
+    iput-object v2, v3, Lcom/multiaccounts/cloneapps/mu;->OooO0OO:Lcom/multiaccounts/cloneapps/wt;
+    new-instance v2, Lcom/multiaccounts/cloneapps/OooO0o;
+    const/4 v4, 0x4
+    invoke-direct {v2, v3, v4}, Lcom/multiaccounts/cloneapps/OooO0o;-><init>(Ljava/lang/Object;I)V
+    invoke-virtual {v0, v2}, Landroid/widget/AdapterView;->setOnItemClickListener(Landroid/widget/AdapterView$OnItemClickListener;)V
+    new-instance v2, Lcom/multiaccounts/cloneapps/OooO;
+    const/4 v4, 0x2
+    invoke-direct {v2, v3, v4}, Lcom/multiaccounts/cloneapps/OooO;-><init>(Ljava/lang/Object;I)V
+    invoke-virtual {v0, v2}, Landroid/widget/AdapterView;->setOnItemLongClickListener(Landroid/widget/AdapterView$OnItemLongClickListener;)V
     :cond_show
     new-instance v0, Landroid/app/AlertDialog$Builder;
     iget-object v2, p0, Lcom/multiaccounts/cloneapps/FolderClickListener;->ctx:Landroid/content/Context;
